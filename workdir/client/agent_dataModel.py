@@ -6,7 +6,7 @@ from oef.schema import DataModel, Description , Location
 
 
 class TIME_AGENT (DataModel):
-	ATTRIBUTE_TIMEZONE = AttributeSchema("timezone", str, True, "TimeZone")
+	ATTRIBUTE_TIMEZONE = AttributeSchema("timezone", bool, True, "TimeZone")
 	ATTRIBUTE_ID = AttributeSchema("id", str, True, "Id")
 
 	

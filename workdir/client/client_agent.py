@@ -3,16 +3,16 @@ import hashlib
 import binascii
 from typing import List
 
-
-from oef.messages import PROPOSE_TYPES
-
-
+import oef
 from oef.agents import OEFAgent
-from oef.schema import DataModel, AttributeSchema
-from oef.query import Query, Constraint, Eq , NotEq ,Range,And, Location
+from oef.proxy import  OEFProxy, PROPOSE_TYPES
+from oef.query import Eq, Range, Constraint, Query, AttributeSchema, Distance 
+from oef.schema import DataModel, Description , Location
+from oef.messages import CFP_TYPES
 
 
-import car_detect_dataModel
+import agent_dataModel
+from agent_dataModel import TIME_AGENT
 
 import json
 import datetime
@@ -54,7 +54,7 @@ class ClientAgent(OEFAgent):
             # we send a 'None' query, meaning "give me all the resources you can propose."
 
             
-            query = Query([Constraint("id", Eq("X4561213"))], car_detect_dataModel.CAR_DETECT())
+            query = Query([Constraint("timezone", Eq(True))], TIME_AGENT())
             self.pending_cfp += 1
             self.send_cfp(1, 0, agent, 0, query)
 
@@ -71,7 +71,7 @@ class ClientAgent(OEFAgent):
 
         # once everyone has responded, let's accept them.
         if received_cfp == self.pending_cfp :
-            print("I am here")
+            #print("I am here")
             if len( self.received_proposals) >= 1 :  
                 self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
                 print ("Accept")
@@ -95,8 +95,7 @@ if __name__ == '__main__':
     client_agent.connect()
 
     # query OEF for DataService providers
-    echo_query = Query([Constraint("id", Eq("X4561213"))],
-                        car_detect_dataModel.CAR_DETECT())
+    echo_query = Query([Constraint("timezone", Eq(True))],TIME_AGENT())
 
     
     client_agent.search_services(0, echo_query)

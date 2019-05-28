@@ -11,6 +11,7 @@ from oef.query import Eq, Range, Constraint, Query, AttributeSchema, Distance
 from oef.schema import DataModel, Description , Location
 from oef.messages import CFP_TYPES
 
+import agent_dataModel
 from agent_dataModel import TIME_AGENT
 
 import random
@@ -36,7 +37,7 @@ class Demo_Agent(OEFAgent):
         """Send a simple Propose to the sender of the CFP."""
         print("[{0}]: Received CFP from {1}".format(self.public_key, origin))
 
-        data = self.get_latest(0)
+        #data = self.get_latest(0)
         proposal = Description({"data" : True})
         self.send_propose(msg_id + 1, dialogue_id, origin, target + 1, [proposal])
         
@@ -67,7 +68,7 @@ if __name__ == '__main__':
     server_agent.scheme['id'] = str(uuid.uuid4())
     server_agent.connect()
     # register a service on the OEF
-    server_agent.description = Description(server_agent.scheme, agent_dataModel.CAR_DETECT())
+    server_agent.description = Description(server_agent.scheme, TIME_AGENT())
     server_agent.register_service(0,server_agent.description)
     server_agent.run()
 
