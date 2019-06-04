@@ -38,7 +38,7 @@ A docker file exists for the simple agent, which can be run easily with:
 
     Docker run .
     
-else, you can run the simple agent with:
+Else, you can run the simple agent with:
 
     python3 workdir/agent/demo_agent.py
 
