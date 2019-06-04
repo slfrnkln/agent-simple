@@ -40,11 +40,11 @@ A docker file exists for the simple agent, which can be run easily with:
     
 else, you can run the simple agent with:
 
-    python3 /workdir/agent/demo_agent.py
+    python3 workdir/agent/demo_agent.py
 
-The client, to interact with the simple agent exists under /workdir/client 
+Finally for the client, to interact with the simple agent exists under /workdir/client 
   
-    python3 /workdir/client/client_agent.py
+    python3 workdir/client/client_agent.py
     
     
     
