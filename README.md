@@ -44,7 +44,7 @@ else, you can run the simple agent with:
 
 The client, to interact with the simple agent exists under /workdir/client 
   
-    python3 /workdir/clientclient_agent.py
+    python3 /workdir/client/client_agent.py
     
     
     
