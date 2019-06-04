@@ -51,12 +51,8 @@ class ClientAgent(OEFAgent):
         for agent in agents:
             
             print("[{0}]: Sending to agent {1}".format(self.public_key, agent))
-            # we send a 'None' query, meaning "give me all the resources you can propose."
-
-            
-            query = Query([Constraint("timezone", Eq(True))], TIME_AGENT())
             self.pending_cfp += 1
-            self.send_cfp(1, 0, agent, 0, query)
+            self.send_cfp(1, 0, agent, 0, None)
 
     def on_propose(self, msg_id: int, dialogue_id: int, origin: str, target: int, proposals: PROPOSE_TYPES):
         """When we receive a Propose message, answer with an Accept."""
@@ -95,7 +91,7 @@ if __name__ == '__main__':
     client_agent.connect()
 
     # query OEF for DataService providers
-    echo_query = Query([Constraint("timezone", Eq(True))],TIME_AGENT())
+    echo_query = Query([Constraint("timezone", Eq(2))],TIME_AGENT())
 
     
     client_agent.search_services(0, echo_query)

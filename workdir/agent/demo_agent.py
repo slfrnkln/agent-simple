@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     # create agent and connect it to OEF
     server_agent = Demo_Agent("Time{}".format(str(random.randint(0,9999999999999))), oef_addr="oef.economicagents.com", oef_port=3333)
-    server_agent.scheme['timezone'] = True
+    server_agent.scheme['timezone'] = 2
     server_agent.scheme['id'] = str(uuid.uuid4())
     server_agent.connect()
     # register a service on the OEF
