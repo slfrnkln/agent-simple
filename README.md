@@ -1,6 +1,6 @@
 # Simple agent
 
-Welcome to Fetch.AI Simple Agent repository. This is where you can see the most simple implementation of an Agent running on, and connecting to the test network.
+Welcome to Fetch.AI Simple Agent repository. This is where you can see the most simple implementation of an Agent connecting to the OEF and making simple queries.
 
 ## License
 
