@@ -26,7 +26,7 @@ import time
 
 class Demo_Agent(OEFAgent):
 
-    def __init__(self, public_key: str, oef_addr: str, oef_port: int = 10000):
+    def __init__(self, public_key: str, oef_addr: str, oef_port: int = 3333):
         super().__init__(public_key, oef_addr, oef_port, loop=asyncio.new_event_loop())
 
         self.scheme = {}
@@ -63,10 +63,10 @@ class Demo_Agent(OEFAgent):
 if __name__ == '__main__':
 
     # create agent and connect it to OEF
-    server_agent = Demo_Agent("Time{}".format(str(random.randint(0,9999999999999))), oef_addr="127.0.0.1", oef_port=10000)
+    server_agent = Demo_Agent("Time{}".format(str(random.randint(0,9999999999999))), oef_addr="127.0.0.1", oef_port=3333)
     server_agent.scheme['timezone'] = 3
     server_agent.scheme['id'] = str(uuid.uuid4())
-    server_agent.scheme['twentyfour'] = False
+    server_agent.scheme['twentyfour'] = True
     server_agent.connect()
     # register a service on the OEF
     server_agent.description = Description(server_agent.scheme, TIME_AGENT())
