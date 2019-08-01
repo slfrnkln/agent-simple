@@ -83,7 +83,7 @@ class ClientAgent(OEFAgent):
             if len( self.received_proposals) >= 1 :
                 proposed = str(self.received_proposals[0]['proposal'])
                 price = [int(s) for s in proposed.split() if s.isdigit()]
-                if api.tokens.balance(client_agentID) >= price[0] :
+                if api.tokens.balance(client_agentID) > price[0] :
                     api.sync(api.tokens.transfer(client_agentID, Address(self.received_proposals[0]['agent']) , price[0], 20))
                     self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
                     print ("Accept")
