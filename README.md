@@ -55,12 +55,12 @@ Make sure the ledger and the oef is set up and running locally.
 
 First generate the ledger entities of each agent with:
 
-  python3 workdir/transfer/generateKeys.py
+    python3 workdir/transfer/generateKeys.py
 
 Next, you can change the path in the Dockerfile or run the simple trading agent with:
 
-  python3 workdir/transfer/agent/demo_agent.py
+    python3 workdir/transfer/agent/demo_agent.py
 
 Finally for the client, to interact with the simple agent, run:
 
-  python3 workdir/transfer/client/client_agent.py
+    python3 workdir/transfer/client/client_agent.py
