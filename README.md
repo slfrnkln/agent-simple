@@ -1,6 +1,8 @@
-# Simple agent
+# Simple agent 2
 
 Welcome to Fetch.AI Simple Agent repository. This is where you can see the most simple implementation of an Agent connecting to the OEF and making simple queries.
+Simple Agent 2 has an addition to the protocol that on top of making queries will set a price and transfer tokens from one agent to the other. This will require
+the ledger set up and running in order to work.
 
 ## License
 
@@ -26,8 +28,8 @@ features. Fetch will be delivering regular updates.
 
 ## Getting Started
 
-Install the requirements.txt 
-  
+Install the requirements.txt
+
     pip3 install -r requirements.txt
 
 A docker file exists for the simple agent, which can be run easily with:
@@ -37,14 +39,28 @@ A docker file exists for the simple agent, which can be run easily with:
     cd agentsimple
 
     Docker run .
-    
+
 Else, you can run the simple agent with:
 
     python3 workdir/agent/demo_agent.py
 
-Finally for the client, to interact with the simple agent exists under /workdir/client 
-  
+Finally for the client, to interact with the simple agent exists under /workdir/client
+
     python3 workdir/client/client_agent.py
-    
-    
-    
+
+
+## Extra Setup for Trading
+
+Make sure the ledger and the oef is set up and running locally.
+
+First generate the ledger entities of each agent with:
+
+  python3 workdir/transfer/generateKeys.py
+
+Next, you can change the path in the Dockerfile or run the simple trading agent with:
+
+  python3 workdir/transfer/agent/demo_agent.py
+
+Finally for the client, to interact with the simple agent, run:
+
+  python3 workdir/transfer/client/client_agent.py
