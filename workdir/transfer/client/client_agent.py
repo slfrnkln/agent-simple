@@ -83,7 +83,9 @@ class ClientAgent(OEFAgent):
             if len( self.received_proposals) >= 1 :
                 proposed = str(self.received_proposals[0]['proposal'])
                 price = [int(s) for s in proposed.split() if s.isdigit()]
+                #check if we can afford the data.
                 if api.tokens.balance(client_agentID) > price[0] :
+                    #if we can, transfer tokens from the client account to the proposal address.
                     api.sync(api.tokens.transfer(client_agentID, Address(self.received_proposals[0]['agent']) , price[0], 20))
                     self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
                     print ("Accept")
@@ -100,8 +102,10 @@ class ClientAgent(OEFAgent):
 
 if __name__ == '__main__':
 
+    #define the ledger parameters
     api = LedgerApi('127.0.0.1', 8100)
 
+    #locate the client account entity for interacting with the ledger.
     with open ('./workdir/transfer/client_private.key', 'r') as private_key_file:
         client_agentID = Entity.load(private_key_file)
 

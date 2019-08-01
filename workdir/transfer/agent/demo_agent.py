@@ -46,6 +46,7 @@ class Demo_Agent(OEFAgent):
 
         #data = self.get_latest(0)
 
+        #format the price for number extraction on other agent
         proposal = Description({"price" : str(' ' + str(price) + ' ')})
         print("[{0}]: Sending propose at price: {1}".format(self.public_key, price))
         self.send_propose(msg_id + 1, dialogue_id, origin, target + 1, [proposal])
@@ -72,12 +73,14 @@ class Demo_Agent(OEFAgent):
 
 if __name__ == '__main__':
 
+    #define the ledger parameters
+    api = LedgerApi('127.0.0.1', 8100)
 
+    #locate the agent account entity for interacting with the ledger.
     with open ('./workdir/transfer/server_private.key', 'r') as private_key_file:
         server_agentID = Entity.load(private_key_file)
 
-    api = LedgerApi('127.0.0.1', 8100)
-    starBalance= api.tokens.balance(server_agentID)
+    #set trading values
     price = 500
     fet_tx_fee = 40
 
