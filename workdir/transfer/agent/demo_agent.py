@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
     api = LedgerApi('127.0.0.1', 8100)
     starBalance= api.tokens.balance(server_agentID)
-    price = 80
+    price = 500
     fet_tx_fee = 40
 
     print('Balance Before:', api.tokens.balance(server_agentID))

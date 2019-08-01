@@ -48,6 +48,8 @@ class ClientAgent(OEFAgent):
         print ("message...")
         print(data)
         print('Final Balance:', api.tokens.balance(client_agentID))
+        time.sleep(10)
+        self.stop()
 
     def on_search_result(self, search_id: int, agents: List[str]):
         """For every agent returned in the service search, send a CFP to obtain resources from them."""
@@ -81,9 +83,13 @@ class ClientAgent(OEFAgent):
             if len( self.received_proposals) >= 1 :
                 proposed = str(self.received_proposals[0]['proposal'])
                 price = [int(s) for s in proposed.split() if s.isdigit()]
-                api.sync(api.tokens.transfer(client_agentID, Address(self.received_proposals[0]['agent']) , price[0], 20))
-                self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
-                print ("Accept")
+                if api.tokens.balance(client_agentID) >= price[0] :
+                    api.sync(api.tokens.transfer(client_agentID, Address(self.received_proposals[0]['agent']) , price[0], 20))
+                    self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
+                    print ("Accept")
+                else :
+                    print("Not enough tokens!")
+                    self.stop()
             else :
                 print("They don't have data")
                 self.stop()
