@@ -10,6 +10,10 @@ from oef.query import Eq, Range, Constraint, Query, AttributeSchema, Distance
 from oef.schema import DataModel, Description , Location
 from oef.messages import CFP_TYPES
 
+from fetchai.ledger.api import LedgerApi
+from fetchai.ledger.contract import SmartContract
+from fetchai.ledger.crypto import Entity, Address
+
 
 import agent_dataModel
 from agent_dataModel import TIME_AGENT
@@ -17,6 +21,7 @@ from agent_dataModel import TIME_AGENT
 import json
 import datetime
 
+import sys
 import time
 import uuid
 import asyncio

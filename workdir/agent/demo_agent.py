@@ -5,6 +5,9 @@ import os, sys
 import json
 import time
 
+from fetchai.ledger.api import LedgerApi
+from fetchai.ledger.contract import SmartContract
+from fetchai.ledger.crypto import Entity, Address
 
 from oef.proxy import  OEFProxy, PROPOSE_TYPES
 from oef.query import Eq, Range, Constraint, Query, AttributeSchema, Distance
@@ -38,7 +41,9 @@ class Demo_Agent(OEFAgent):
         print("[{0}]: Received CFP from {1}".format(self.public_key, origin))
 
         #data = self.get_latest(0)
-        proposal = Description({"data" : True})
+        price = 40
+        proposal = Description({"price" : price})
+        print("[{0}]: Sending propose at price: {1}".format(self.public_key, price))
         self.send_propose(msg_id + 1, dialogue_id, origin, target + 1, [proposal])
 
     def on_accept(self, msg_id: int, dialogue_id: int, origin: str, target: int):
