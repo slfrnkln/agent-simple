@@ -5,4 +5,4 @@ WORKDIR /app
 ADD . /app/
 RUN pip3 install -r requirements.txt
 
-CMD ["python3", "/app/workdir/agent/demo_agent.py"]
+CMD ["python3", "/app/workdir/Agent1/agent/demo_agent.py"]

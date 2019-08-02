@@ -26,7 +26,7 @@ features. Fetch will be delivering regular updates.
 
 (We plan to support all major platforms in the future)
 
-## Getting Started for Trading
+## Getting Started with Trading
 
 Following the README in the main folder you can follow these steps to get started with the simple trading agent.
 
