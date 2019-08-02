@@ -60,7 +60,6 @@ class ClientAgent(OEFAgent):
     def on_propose(self, msg_id: int, dialogue_id: int, origin: str, target: int, proposals: PROPOSE_TYPES):
         """When we receive a Propose message, answer with an Accept."""
         print("[{0}]: Received propose from agent {1}".format(self.public_key, origin))
-        #print(dialogue_id)
 
         for i,p in enumerate(proposals):
             self.received_proposals.append({"agent" : origin,

@@ -27,10 +27,6 @@ import asyncio
 import uuid
 import time
 
-#import logging
-#from oef.logger import set_logger
-#set_logger("oef.agents", logging.DEBUG)
-
 class Demo_Agent(OEFAgent):
 
     def __init__(self, public_key: str, oef_addr: str, oef_port: int = 10000):
@@ -43,8 +39,6 @@ class Demo_Agent(OEFAgent):
     def on_cfp(self, msg_id: int, dialogue_id: int, origin: str, target: int, query: CFP_TYPES):
         """Send a simple Propose to the sender of the CFP."""
         print("[{0}]: Received CFP from {1}".format(self.public_key, origin))
-
-        #data = self.get_latest(0)
 
         #format the price for number extraction on other agent
         proposal = Description({"price" : price})

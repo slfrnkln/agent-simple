@@ -24,9 +24,6 @@ import time
 import uuid
 import asyncio
 
-#import logging
-#from oef.logger import set_logger
-#set_logger("oef.agents", logging.DEBUG)
 
 class ClientAgent(OEFAgent):
     """
@@ -67,7 +64,6 @@ class ClientAgent(OEFAgent):
     def on_propose(self, msg_id: int, dialogue_id: int, origin: str, target: int, proposals: PROPOSE_TYPES):
         """When we receive a Propose message, check if we can afford the data. If so we accept, else we decline the proposal."""
         print("[{0}]: Received propose from agent {1}".format(self.public_key, origin))
-        #print(dialogue_id)
 
         for i,p in enumerate(proposals):
             self.received_proposals.append({"agent" : origin,
@@ -111,8 +107,6 @@ if __name__ == '__main__':
     #locate the client account entity for interacting with the ledger.
     with open ('./workdir/Agent2/client_private.key', 'r') as private_key_file:
         client_agentID = Entity.load(private_key_file)
-
-    #clientID = str(uuid.uuid4())
 
     # define an OEF Agent
     client_agent = ClientAgent(str(Address(client_agentID)), oef_addr="127.0.0.1", oef_port=10000)
