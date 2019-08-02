@@ -53,7 +53,7 @@ class Demo_Agent(OEFAgent):
         startBalance = api.tokens.balance(server_agentID)
 
     def on_accept(self, msg_id: int, dialogue_id: int, origin: str, target: int):
-        """Once we received an Accept, send the requested data."""
+        """Once we received an Accept, check the correct funds have been recieved. If so send the requested data."""
         print("[{0}]: Received accept from {1}.".format(self.public_key, origin))
 
         if startBalance < api.tokens.balance(server_agentID):

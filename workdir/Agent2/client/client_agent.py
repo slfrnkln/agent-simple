@@ -67,7 +67,7 @@ class ClientAgent(OEFAgent):
             self.send_cfp(1, 0, agent, 0, None)
 
     def on_propose(self, msg_id: int, dialogue_id: int, origin: str, target: int, proposals: PROPOSE_TYPES):
-        """When we receive a Propose message, answer with an Accept."""
+        """When we receive a Propose message, check if we can afford the data. If so we accept, else we decline the proposal."""
         print("[{0}]: Received propose from agent {1}".format(self.public_key, origin))
         #print(dialogue_id)
 
