@@ -1,4 +1,4 @@
-# Simple Agents
+# Simple Agent
 
 Welcome to Fetch.AI Simple Agent repository. This is where you can see the most simple implementation of an Agent connecting to the OEF and making simple queries.
 Simple Agent 2 has an addition to the protocol that on top of making queries will set a price and transfer tokens from one agent to the other. This will require
@@ -28,17 +28,20 @@ features. Fetch will be delivering regular updates.
 
 ## Getting Started
 
-First of all both the OEF and Ledger are required to be running locally for the agents to work.
-For Agent 2 you are also required to have the ledger python api installed.
+After following the README in the main folder you can follow these steps to get started with the original simple agent.
 
-You can find information on how to install the OEF [here](https://github.com/fetchai/oef-search-pluto "Install the OEF here!").
+A docker file exists for the simple agent, which can be run easily with:
 
-Information on how to get started with the fetch ledger can be found [here](https://docs.fetch.ai/getting-started/versions/ "Install the Ledger here!")
+    git clone https://github.com/fetchai/agentsimple.git
 
-To install the ledger api for python visit [here](https://github.com/fetchai/ledger-api-py "Install the Ledger API for Python here!").
+    cd agentsimple
 
-Install the requirements.txt
+    Docker run .
 
-    pip3 install -r requirements.txt
+Else, you can run the simple agent with:
 
-You will find additional README files in the respective agent folders.
+    python3 workdir/agent/demo_agent.py
+
+Finally for the client, to interact with the simple agent exists under /workdir/client
+
+    python3 workdir/client/client_agent.py
