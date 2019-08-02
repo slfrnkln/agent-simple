@@ -8,6 +8,8 @@ def main():
 
     api = LedgerApi('127.0.0.1', 8100)
 
+    print('Generating keys...')
+
     entity1 = Entity()
 
     with open('./workdir/transfer/server_private.key', 'w') as private_key_file:
@@ -18,8 +20,12 @@ def main():
     with open('./workdir/transfer/client_private.key', 'w') as private_key_file:
         entity2.dump(private_key_file)
 
+    print('Generating keys...complete')
+    print('Adding Funds...')
+
     api.sync(api.tokens.wealth(entity2, 1000))
 
+    print('Adding Funds...complete')
 
 if __name__ == '__main__':
     main()

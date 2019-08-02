@@ -31,6 +31,11 @@ import time
 #from oef.logger import set_logger
 #set_logger("oef.agents", logging.DEBUG)
 
+def print_address_balances(api: LedgerApi, contract: SmartContract, addresses: [Address]):
+    for idx, address in enumerate(addresses):
+        print('Address{}: {:<6d} bFET {:<10d} TOK'.format(idx, api.tokens.balance(address), contract.query(api, 'balance', address=address)))
+    print()
+
 class Demo_Agent(OEFAgent):
 
     def __init__(self, public_key: str, oef_addr: str, oef_port: int = 10000):
@@ -46,27 +51,22 @@ class Demo_Agent(OEFAgent):
 
         #data = self.get_latest(0)
 
-        #format the price for number extraction on other agent
-        proposal = Description({"price" : price})
+        proposal = Description({"price" : price })
         print("[{0}]: Sending propose at price: {1}".format(self.public_key, price))
         self.send_propose(msg_id + 1, dialogue_id, origin, target + 1, [proposal])
-        startBalance = api.tokens.balance(server_agentID)
 
     def on_accept(self, msg_id: int, dialogue_id: int, origin: str, target: int):
         """Once we received an Accept, send the requested data."""
         print("[{0}]: Received accept from {1}.".format(self.public_key, origin))
 
-        if startBalance < api.tokens.balance(server_agentID):
-            command = {}
-            command["time"] = int(time.time())
-            msg = json.dumps(command)
-            self.send_message(0,dialogue_id, origin, msg.encode())
+        api.sync(contract.action(api, 'transfer', fet_tx_fee, [server_agentID], Address(server_agentID), Address(origin), tok_transfer_amount))
 
-            print('Final Balance:', api.tokens.balance(server_agentID))
-        else:
-            print('No Funds Sent!')
-            print('Ending Dialogue')
-            return
+        command = {}
+        command["time"] = int(time.time())
+        msg = json.dumps(command)
+        self.send_message(0,dialogue_id, origin, msg.encode())
+
+        print_address_balances(api, contract, [Address(server_agentID), Address(origin)])
 
 
     def on_decline(self, msg_id: int, dialogue_id: int, origin: str, target: int):
@@ -80,21 +80,21 @@ class Demo_Agent(OEFAgent):
 
 if __name__ == '__main__':
 
-    #define the ledger parameters
-    api = LedgerApi('127.0.0.1', 8100)
 
-    #locate the agent account entity for interacting with the ledger.
-    with open ('./workdir/transfer/server_private.key', 'r') as private_key_file:
+    with open ('./workdir/transfer2/server_private.key', 'r') as private_key_file:
         server_agentID = Entity.load(private_key_file)
 
-    startBalance = api.tokens.balance(server_agentID)
-
-    #set trading values
-    price = 200
+    api = LedgerApi('127.0.0.1', 8100)
+    price = ' 80 '
+    tok_transfer_amount = 200
     fet_tx_fee = 40
 
-    print('Price:', price)
-    print('Balance Before:', startBalance)
+    print('Starting Balance:', api.tokens.balance(server_agentID))
+
+    with open ('./workdir/transfer2/agent/contract.one', 'r') as contract_file:
+        contract = SmartContract.load(contract_file)
+
+    print_address_balances(api, contract, [Address(server_agentID)])
 
     # create agent and connect it to OEF
     server_agent = Demo_Agent(str(Address(server_agentID)), oef_addr="127.0.0.1", oef_port=10000)

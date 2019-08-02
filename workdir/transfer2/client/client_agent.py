@@ -48,8 +48,6 @@ class ClientAgent(OEFAgent):
         print ("message...")
         print(data)
         print('Final Balance:', api.tokens.balance(client_agentID))
-        time.sleep(10)
-        self.stop()
 
     def on_search_result(self, search_id: int, agents: List[str]):
         """For every agent returned in the service search, send a CFP to obtain resources from them."""
@@ -77,26 +75,12 @@ class ClientAgent(OEFAgent):
 
         received_cfp = len(self.received_proposals) + self.received_declines
 
-        #sort the multiple proposals by price
-        self.received_proposals.sort(key = lambda i: (i['proposal']['price']))
-
         # once everyone has responded, let's accept them.
         if received_cfp == self.pending_cfp :
             print("I am here")
             if len( self.received_proposals) >= 1 :
-                proposed = str(self.received_proposals[0]['proposal'])
-                price = [int(s) for s in proposed.split() if s.isdigit()]
-                #check if we can afford the data.
-                if api.tokens.balance(client_agentID) > self.received_proposals[0]['proposal']['price'] :
-                    #if we can, transfer tokens from the client account to the proposal address.
-                    api.sync(api.tokens.transfer(client_agentID, Address(self.received_proposals[0]['agent']) , self.received_proposals[0]['proposal']['price'], 20))
-                    self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
-                    print ("Accept")
-                else :
-                    print("Not enough tokens!")
-                    #cannot afford! Decline the proposal.
-                    self.send_decline(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
-                    self.stop()
+                self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
+                print ("Accept")
             else :
                 print("They don't have data")
                 self.stop()
@@ -107,11 +91,9 @@ class ClientAgent(OEFAgent):
 
 if __name__ == '__main__':
 
-    #define the ledger parameters
     api = LedgerApi('127.0.0.1', 8100)
 
-    #locate the client account entity for interacting with the ledger.
-    with open ('./workdir/transfer/client_private.key', 'r') as private_key_file:
+    with open ('./workdir/transfer2/client_private.key', 'r') as private_key_file:
         client_agentID = Entity.load(private_key_file)
 
     #clientID = str(uuid.uuid4())
