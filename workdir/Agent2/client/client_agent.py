@@ -118,7 +118,8 @@ if __name__ == '__main__':
         with open('./workdir/Agent2/client/client_private.key', 'w') as private_key_file:
             client_agentID.dump(private_key_file)
 
-    api.sync(api.tokens.wealth(client_agentID, 1000))
+        api.sync(api.tokens.wealth(client_agentID, 1000))
+        
     startBalance = api.tokens.balance(client_agentID)
 
     # define an OEF Agent
