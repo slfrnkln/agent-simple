@@ -105,6 +105,7 @@ if __name__ == '__main__':
     #define the ledger parameters
     api = LedgerApi('127.0.0.1', 8100)
 
+    #check if entity has already been created
     if(os.path.exists('./workdir/Agent2/client/client_private.key')):
 
         #locate the agent account entity for interacting with the ledger.
@@ -112,14 +113,14 @@ if __name__ == '__main__':
                 client_agentID = Entity.load(private_key_file)
 
     else:
-
+        #create new entity for the agent
         client_agentID = Entity()
-
+        #store private key of newly formed entity
         with open('./workdir/Agent2/client/client_private.key', 'w') as private_key_file:
             client_agentID.dump(private_key_file)
-
+        #give the account starting tokens
         api.sync(api.tokens.wealth(client_agentID, 1000))
-        
+
     startBalance = api.tokens.balance(client_agentID)
 
     # define an OEF Agent
