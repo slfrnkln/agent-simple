@@ -77,9 +77,18 @@ if __name__ == '__main__':
     #define the ledger parameters
     api = LedgerApi('127.0.0.1', 8100)
 
-    #locate the agent account entity for interacting with the ledger.
-    with open ('./workdir/Agent2/server_private.key', 'r') as private_key_file:
-        server_agentID = Entity.load(private_key_file)
+    if(os.path.exists('./workdir/Agent2/agent/server_private.key')):
+
+        #locate the agent account entity for interacting with the ledger.
+        with open ('./workdir/Agent2/agent/server_private.key', 'r') as private_key_file:
+                server_agentID = Entity.load(private_key_file)
+
+    else:
+
+        server_agentID = Entity()
+
+        with open('./workdir/Agent2/agent/server_private.key', 'w') as private_key_file:
+            server_agentID.dump(private_key_file)
 
     startBalance = api.tokens.balance(server_agentID)
 

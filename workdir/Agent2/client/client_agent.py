@@ -19,6 +19,7 @@ from agent_dataModel import TIME_AGENT
 import json
 import datetime
 
+import os
 import sys
 import time
 import uuid
@@ -104,14 +105,26 @@ if __name__ == '__main__':
     #define the ledger parameters
     api = LedgerApi('127.0.0.1', 8100)
 
-    #locate the client account entity for interacting with the ledger.
-    with open ('./workdir/Agent2/client_private.key', 'r') as private_key_file:
-        client_agentID = Entity.load(private_key_file)
+    if(os.path.exists('./workdir/Agent2/client/client_private.key')):
+
+        #locate the agent account entity for interacting with the ledger.
+        with open ('./workdir/Agent2/client/client_private.key', 'r') as private_key_file:
+                client_agentID = Entity.load(private_key_file)
+
+    else:
+
+        client_agentID = Entity()
+
+        with open('./workdir/Agent2/client/client_private.key', 'w') as private_key_file:
+            client_agentID.dump(private_key_file)
+
+    api.sync(api.tokens.wealth(client_agentID, 1000))
+    startBalance = api.tokens.balance(client_agentID)
 
     # define an OEF Agent
     client_agent = ClientAgent(str(Address(client_agentID)), oef_addr="127.0.0.1", oef_port=10000)
 
-    print('Balance Before:', api.tokens.balance(client_agentID))
+    print('Balance Before:', startBalance)
 
     # connect it to the OEF Node
     client_agent.connect()
