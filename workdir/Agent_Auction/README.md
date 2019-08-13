@@ -33,7 +33,6 @@ Following the README in the main folder you can follow these steps to get starte
 
 Make sure the ledger and the oef is set up and running locally.
 
-<<<<<<< HEAD
 To run the auction agent you can change the path in the Dockerfile or run the simple trading agent with:
 
     python3 workdir/Agent_Auction/agent/demo_agent.py
