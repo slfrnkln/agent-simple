@@ -1,8 +1,9 @@
-# Simple Agent 2
+# Simple Auction Agent
 
 Welcome to Fetch.AI Simple Agent repository. This is where you can see the most simple implementation of an Agent connecting to the OEF and making simple queries.
-Simple Agent 2 has an addition to the protocol that on top of making queries will set a price and transfer tokens from one agent to the other. This will require
-the ledger set up and running in order to work.
+The Simple Auction Agent uses a modified version of the FIPA English Auction Interaction Protocol to conduct an Auction for example data between multiple agents.
+The auction continues through handling multiple agents until one participant outbids the rest to purchase the data. The winning client will then transfer the
+bidded amount of tokens to recieve the example data.
 
 ## License
 
@@ -28,26 +29,22 @@ features. Fetch will be delivering regular updates.
 
 ## Getting Started with Trading
 
-Following the README in the main folder you can follow these steps to get started with the simple trading agent.
+Following the README in the main folder you can follow these steps to get started with the simple auction agent.
 
 Make sure the ledger and the oef is set up and running locally.
 
 <<<<<<< HEAD
-To run the server trading agent you can change the path in the Dockerfile or run the simple trading agent with:
+To run the auction agent you can change the path in the Dockerfile or run the simple trading agent with:
 
-    python3 workdir/transfer/agent/demo_agent.py
+    python3 workdir/Agent_Auction/agent/demo_agent.py
 
-For the client, to interact with the simple trading agent, run:
-=======
-First generate the ledger entity keys for each agent with (This will also add funds to each account):
+To run a participant there is an example client which you can run from here:
 
-    python3 workdir/transfer/generateKeys.py
+    python3 workdir/Agent_Auction/client/client_agent.py
 
-Next, you can change the path in the Dockerfile or run the simple trading agent with:
-
-    python3 workdir/transfer/agent/demo_agent.py
-
-Finally for the client, to interact with the simple trading agent, run:
->>>>>>> 634d9b486cc7984e2710174f76c6252c57025147
+For the full example run the multiClient script here:
 
     python3 workdir/transfer/client/client_agent.py
+
+This script will create 10 participants with random max bid limits and bidding intervals, to interact with the auctioneer.
+Whichever client out bids the others will win the auction, transfer tokens and recieve the data.

@@ -32,22 +32,14 @@ Following the README in the main folder you can follow these steps to get starte
 
 Make sure the ledger and the oef is set up and running locally.
 
-<<<<<<< HEAD
-To run the server trading agent you can change the path in the Dockerfile or run the simple trading agent with:
+Firstly, you can change the path in the Dockerfile or run the simple trading agent with:
 
-    python3 workdir/transfer/agent/demo_agent.py
+    python3 workdir/Agent2/agent/demo_agent.py
 
-For the client, to interact with the simple trading agent, run:
-=======
-First generate the ledger entity keys for each agent with (This will also add funds to each account):
+Then for the client, to interact with the simple trading agent, run:
 
-    python3 workdir/transfer/generateKeys.py
+    python3 workdir/Agent2/client/client_agent.py
 
-Next, you can change the path in the Dockerfile or run the simple trading agent with:
-
-    python3 workdir/transfer/agent/demo_agent.py
-
-Finally for the client, to interact with the simple trading agent, run:
->>>>>>> 634d9b486cc7984e2710174f76c6252c57025147
-
-    python3 workdir/transfer/client/client_agent.py
+In this example, the client will call for a proposal which is met by the data agent. The data agent will then propose
+example data for a price which the client will either accept or decline depending on whether client has enough tokens.
+There will then be tokens transfered followed by the exchanging of the data.

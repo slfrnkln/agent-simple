@@ -1,8 +1,9 @@
-# Simple Agent 2
+# Simple Negotiation Agent
 
 Welcome to Fetch.AI Simple Agent repository. This is where you can see the most simple implementation of an Agent connecting to the OEF and making simple queries.
-Simple Agent 2 has an addition to the protocol that on top of making queries will set a price and transfer tokens from one agent to the other. This will require
-the ledger set up and running in order to work.
+Simple Negotiation Agent has an addition to the protocol that on top of making queries will negotiate a price between the client and the data agent.
+Once a deal is made, tokens will be transferred from one agent to the other followed by the exchange of data.
+This will require the ledger set up and running in order to work.
 
 ## License
 
@@ -32,22 +33,16 @@ Following the README in the main folder you can follow these steps to get starte
 
 Make sure the ledger and the oef is set up and running locally.
 
-<<<<<<< HEAD
-To run the server trading agent you can change the path in the Dockerfile or run the simple trading agent with:
+You can change the path in the Dockerfile or run the Simple Negotiation Agent with:
 
-    python3 workdir/transfer/agent/demo_agent.py
+    python3 workdir/Agent3/agent/demo_agent.py
 
-For the client, to interact with the simple trading agent, run:
-=======
-First generate the ledger entity keys for each agent with (This will also add funds to each account):
+For the client, to interact with the Simple Negotiation Agent, run:
 
-    python3 workdir/transfer/generateKeys.py
+    python3 workdir/Agent3/client/client_agent.py
 
-Next, you can change the path in the Dockerfile or run the simple trading agent with:
+You may also like to see how the demo agent deals with multiple clientel with regards to negotiation.
 
-    python3 workdir/transfer/agent/demo_agent.py
+You can test this by running the multiClient script here:
 
-Finally for the client, to interact with the simple trading agent, run:
->>>>>>> 634d9b486cc7984e2710174f76c6252c57025147
-
-    python3 workdir/transfer/client/client_agent.py
+    python3 workdir/Agent3/client/multiClient.py

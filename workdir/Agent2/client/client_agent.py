@@ -12,17 +12,15 @@ from fetchai.ledger.api import LedgerApi
 from fetchai.ledger.contract import SmartContract
 from fetchai.ledger.crypto import Entity, Address, Identity
 
-
 import agent_dataModel
 from agent_dataModel import TIME_AGENT
 
 import json
 import datetime
 
-<<<<<<< HEAD
+
 import os
-=======
->>>>>>> 634d9b486cc7984e2710174f76c6252c57025147
+
 import sys
 import time
 import uuid
@@ -108,7 +106,6 @@ if __name__ == '__main__':
     #define the ledger parameters
     api = LedgerApi('127.0.0.1', 8100)
 
-<<<<<<< HEAD
     #check if entity has already been created
     if(os.path.exists('./workdir/Agent2/client/client_private.key')):
 
@@ -126,20 +123,11 @@ if __name__ == '__main__':
         api.sync(api.tokens.wealth(client_agentID, 1000))
 
     startBalance = api.tokens.balance(client_agentID)
-=======
-    #locate the client account entity for interacting with the ledger.
-    with open ('./workdir/Agent2/client_private.key', 'r') as private_key_file:
-        client_agentID = Entity.load(private_key_file)
->>>>>>> 634d9b486cc7984e2710174f76c6252c57025147
 
     # define an OEF Agent
     client_agent = ClientAgent(str(Address(client_agentID)), oef_addr="127.0.0.1", oef_port=10000)
 
-<<<<<<< HEAD
     print('Balance Before:', startBalance)
-=======
-    print('Balance Before:', api.tokens.balance(client_agentID))
->>>>>>> 634d9b486cc7984e2710174f76c6252c57025147
 
     # connect it to the OEF Node
     client_agent.connect()

@@ -108,5 +108,6 @@ if __name__ == '__main__':
     server_agent.connect()
     # register a service on the OEF
     server_agent.description = Description(server_agent.scheme, TIME_AGENT())
+    print(server_agent.description)
     server_agent.register_service(0,server_agent.description)
     server_agent.run()
