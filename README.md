@@ -3,10 +3,10 @@
 Welcome to Fetch.AI Simple Agent repository. This is where you can see the most simple implementation of an Agent connecting to the OEF and making simple queries.
 There are now muliple agent examples contained within the repo of increasing complexity and use. Examples now contain:
 
-  * A Simple Agent showing connecting and interacting over the OEF.
-  * A Simple Trading Agent which introduces the transfering of tokens using the Ledger.
-  * A Negotiating agent which implements basic negotiation stratergies into the agents trying to get the best price for their data.
-  * Finally the Auction agent shows a simple example of a modified FIPA English Auction Interaction Protocol for selling data to the highest bidding client.
+  * Simple Agent showing connecting and interacting over the OEF.
+  * Simple Trading Agent which introduces the transfering of tokens using the Ledger.
+  * Negotiating Agent which implements basic negotiation strategies into the agents trying to get the best price for their data.
+  * Auction Agent shows a simple example of a modified FIPA English Auction Interaction Protocol for selling data to the highest bidding client.
 
 ## License
 
