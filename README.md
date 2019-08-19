@@ -33,7 +33,7 @@ features. Fetch will be delivering regular updates.
 ## Getting Started
 
 First of all both the OEF and Ledger are required to be running locally for the agents to work.
-For Agent 2 you are also required to have the ledger python api installed.
+For Agent 2 and onwards you are also required to have the ledger python api installed.
 
 You can find information on how to install the OEF [here](https://github.com/fetchai/oef-search-pluto "Install the OEF here!").
 

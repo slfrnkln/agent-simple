@@ -75,11 +75,21 @@ class ClientAgent(OEFAgent):
             self.prevPrice = newOffer
             if self.Auction == False:
                 if self.received_proposals[0]['proposal']['auction']:
-                    print('Accepting Auction with maxPrice: {0}, at interval: {1}'.format(self.maxPrice, self.interval))
+                    print('[{0}] Accepting Auction with maxPrice: {1}, at interval: {2}'.format(self.public_key, self.maxPrice, self.interval))
                     self.send_accept(msg_id, dialogue_id, self.received_proposals[0]['agent'], msg_id+1)
                     self.received_proposals.clear()
                     self.Auction = True
             else:
+                if self.received_proposals[0]['proposal']['auction'] == False:
+                    if newPrice <= self.maxPrice:
+                        print('Accepting Offer of Price: {}'.format(newPrice))
+                        self.send_accept(msg_id, dialogue_id, self.received_proposals[0]['agent'], msg_id+1)
+                        self.api.sync(self.api.tokens.transfer(self.account, Address(origin) , self.prevPrice - self.interval, 20))
+                        print('Final Balance:', self.api.tokens.balance(self.account))
+                    else:
+                        print('Cannot Afford')
+                        self.send_decline(msg_id,dialogue_id,self.received_proposals['agent'],msg_id + 1)
+
                 if newOffer <= self.maxPrice:
                     print('{} : Sending proposal of: {}'.format(self.public_key,newOffer))
                     proposal = Description({"price" : newOffer})
@@ -93,7 +103,7 @@ class ClientAgent(OEFAgent):
 
     def on_accept(self, msg_id: int, dialogue_id: int, origin: str, target: int):
         print('[{}] Our offer has been accepted!'.format(self.public_key))
-        self.api.sync(self.api.tokens.transfer(self.account, Address(origin) , self.prevPrice - self.interval, 20))
+        self.api.sync(self.api.tokens.transfer(self.account, Address(origin) , self.prevPrice, 20))
         print('Final Balance:', self.api.tokens.balance(self.account))
 
     def on_decline(self, msg_id: int, dialogue_id: int, origin: str, target: int) :

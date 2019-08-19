@@ -108,12 +108,8 @@ class Demo_Agent(OEFAgent):
         if len(currentBids) > 1:
             """Multiple Bids! Sort bids by price. Remove any participants bidding less than the current round's price."""
             currentBids.sort(key = lambda i: (i['proposal']['price']), reverse = True)
-            if currentBids[0]['proposal']['price'] == self.price:
-                self.bidAccept(msg_id, dialogue_id)
-                self.reset()
-                return
             for p in currentBids:
-                if p['proposal']['price'] <= self.price:
+                if p['proposal']['price'] < self.price:
                     print('Removing: {}'.format(p['agent']))
                     self.send_decline(msg_id+2, dialogue_id, p['agent'], msg_id+1)
                     self.participants.remove(p['agent'])
@@ -133,10 +129,11 @@ class Demo_Agent(OEFAgent):
                     self.highestbid = currentBids[0]
                     self.price = self.highestbid['proposal']['price']
 
-                print('Current Leader:', self.highestbid)
+                print('Winner:', self.highestbid)
                 self.received_proposals.clear()
                 currentBids.clear()
-                self.mainAuction(msg_id+1, dialogue_id, target+1)
+                self.bidAccept(msg_id, dialogue_id)
+                self.reset()
 
             else:
                 """If only one bidder left, we have a highest bidder. Accept the offer! (The check to see 'if highestbid == None' is in case a bidder wins on the first round of the auction.)"""

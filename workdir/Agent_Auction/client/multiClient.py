@@ -54,7 +54,8 @@ def makeClient(number: int):
     startBalance = api.tokens.balance(client_agentID)
 
     price = random.randint(25, 100)
-    interval = random.randint(5,20)
+    interval = random.randint(5, 20)
+
 
     # define an OEF Agent
     client = client_agent.ClientAgent(str(Address(client_agentID)), price, interval, client_agentID, oef_addr="127.0.0.1", oef_port=10000)
