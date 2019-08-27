@@ -35,7 +35,30 @@ features. Fetch will be delivering regular updates.
 First of all both the OEF and Ledger are required to be running locally for the agents to work.
 For Agent 2 and onwards you are also required to have the ledger python api installed.
 
-You can find information on how to install the OEF [here](https://github.com/fetchai/oef-search-pluto "Install the OEF here!").
+You can find information on the OEF [here](https://docs.fetch.ai/oef/ "Information on the OEF here!").
+
+##Running an OEF node
+First, get [Docker]("https://www.docker.com/get-started "Get Docker Here!")
+
+Next pull and launch our published image.
+
+    docker pull fetchai/oef-search:latest
+
+Then download [`node_config.json`]("https://docs.fetch.ai/oef/assets/node_config.json")
+
+    curl https://raw.githubusercontent.com/fetchai/oef-search-pluto/master/scripts/node_config.json >
+      node_config.json
+
+And run the Docker image with the configuration.
+
+    docker run -it -v `pwd`:/config -v `pwd`:/app/fetch-logs \
+    -p 20000:20000 -p 10000:10000 \
+    -p 40000:40000 -p 7500 \
+    fetchai/oef-search:latest /config/node_config.json
+
+A successful run will start producing stats dumps after a few seconds.
+You'll need to have several ports available on your machine: `10000`, `20000`, `30000`, and `7500`.
+Now we have a node up and running, let's get the SDK.
 
 Information on how to get started with the fetch ledger can be found [here](https://docs.fetch.ai/getting-started/versions/ "Install the Ledger here!")
 
