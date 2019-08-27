@@ -5,9 +5,7 @@ There are now muliple agent examples contained within the repo of increasing com
 
   * Simple Agent showing connecting and interacting over the OEF.
   * Simple Trading Agent which introduces the transfering of tokens using the Ledger.
-  * Negotiating Agent which implements basic negotiation strategies into the agents trying to get the best price for their data.
-  * Auction Agent shows a simple example of a modified FIPA English Auction Interaction Protocol for selling data to the highest bidding client.
-
+  
 ## License
 
 Fetch.AI Simple Agent is licensed under the Apache software license (see LICENSE file). Unless required by
