@@ -46,8 +46,7 @@ Next pull and launch our published image.
 
 Then download [`node_config.json`]("https://docs.fetch.ai/oef/assets/node_config.json")
 
-    curl https://raw.githubusercontent.com/fetchai/oef-search-pluto/master/scripts/node_config.json >
-      node_config.json
+    curl https://raw.githubusercontent.com/fetchai/oef-search-pluto/master/scripts/node_config.json > node_config.json
 
 And run the Docker image with the configuration.
 
