@@ -37,7 +37,7 @@ For Agent 2 and onwards you are also required to have the ledger python api inst
 
 You can find information on the OEF [here](https://docs.fetch.ai/oef/ "Information on the OEF here!").
 
-##Running an OEF node
+### Running an OEF node
 First, get [Docker]("https://www.docker.com/get-started "Get Docker Here!")
 
 Next pull and launch our published image.
