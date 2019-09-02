@@ -75,15 +75,15 @@ This will add funds to it when the node is initialised. Once address1 has been c
 
 Initialise the local private node by running:
 
-    ```
+
     geth --identity “LocalTestNode” --rpc --rpcport 8080 --rpccorsdomain “*” --datadir ./privChain/data/ --port 30303 --nodiscover --rpcapi db,eth,net,web3,personal --networkid 1999 --maxpeers 0 --verbosity 6 init ./privChain/nodeJSON.json 2>> ./privChain/logs/00.log
-    ```
+
 
 This will set up the node with starting settings, adding funds to the main account we created earlier. We can now start the node with the JavaScript console running:
 
-    ```
+
     geth --identity “LocalTestNode” --rpc --rpcport 8080 --rpccorsdomain “*” --datadir ./privChain/data/ --port 30303 --nodiscover --rpcapi db,eth,net,web3,personal --networkid 1999 --maxpeers 0 console
-    ```
+
 
 To check the account funds have been added we can the following command:
 
