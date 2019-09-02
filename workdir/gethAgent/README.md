@@ -55,7 +55,7 @@ You should get a similar output to this:
     GOROOT=/usr/lib/go-1.11
 
 Next we need to create a starting account to add starting test Ethereum to. This will be the account we transfer ETH from to our agent accounts for testing.
-To make this easier lets make the password: "Password1!". If you decide to change this you will need to edit the password provided in transferETH.py or the main account will not be able to transfer funds.
+To make this easier lets make the password: **"Password1!"**. If you decide to change this you will need to edit the password provided in `transferETH.py` or the main account will not be able to transfer funds.
 
     cd workdir/gethAgent/
     geth --datadir ./privChain/data account new
@@ -69,8 +69,8 @@ To make this easier lets make the password: "Password1!". If you decide to chang
     Public address of the key:   0xf4EbD8403B67c24d72Ca47bb0A54d1aE5fDF88AE
     Path of the secret key file: privChain/data/keystore/secretkeyfile
 
-Next we now need to initiate the geth node. First copy the address of the account you have just created into generateNodeJSON.py. There is a variable called address1 that should equal the address of the main account.
-This will add funds to it when the node is initialised. Once address1 has been changed run the script:
+Next we now need to initiate the geth node. First copy the address of the account you have just created into `generateNodeJSON.py`. There is a variable called `address1` that should equal the address of the main account.
+This will add funds to it when the node is initialised. Once `address1` has been changed run the script:
 
     python3 generateNodeJSON.py
 
