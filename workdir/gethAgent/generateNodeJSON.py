@@ -28,7 +28,7 @@ x = {
  }
 }
 
-with open('./mychain/nodeJSON.json', 'w') as customNodeJSON:
+with open('./privChain/nodeJSON.json', 'w') as customNodeJSON:
     json.dump(x, customNodeJSON)
 
 print(json.dumps(x))

@@ -39,7 +39,7 @@ First you need to install [geth](https://geth.ethereum.org/install-and-build/Ins
 
 To check geth is installed correctly in the current directory run:
 
-    $geth version
+    $ geth version
 
 You should get a similar output to this:
 
@@ -53,3 +53,48 @@ You should get a similar output to this:
     Operating System: linux
     GOPATH=
     GOROOT=/usr/lib/go-1.11
+
+Next we need to create a starting account to add starting test Ethereum to. This will be the account we transfer ETH from to our agent accounts for testing.
+
+    cd workdir/gethAgent/
+    geth --datadir ./privChain/data account new
+
+    Your new account is locked with a password. Please give a password. Do not forget this password.
+    Password:
+    Repeat password:
+
+    Your new key was generated
+
+    Public address of the key:   0xf4EbD8403B67c24d72Ca47bb0A54d1aE5fDF88AE
+    Path of the secret key file: privChain/data/keystore/secretkeyfile
+
+Next we now need to initiate the geth node. First copy the address of the account you have just created into generateNodeJSON.py. There is a variable called address1 that should equal the address of the main account.
+This will add funds to it when the node is initialised. Once address1 has been changed run the script:
+
+    python3 generateNodeJSON.py
+
+Initialise the local private node by running:
+
+    ```
+    geth --identity “LocalTestNode” --rpc --rpcport 8080 --rpccorsdomain “*” --datadir ./privChain/data/ --port 30303 --nodiscover --rpcapi db,eth,net,web3,personal --networkid 1999 --maxpeers 0 --verbosity 6 init ./privChain/nodeJSON.json 2>> ./privChain/logs/00.log
+    ```
+
+This will set up the node with starting settings, adding funds to the main account we created earlier. We can now start the node with the JavaScript console running:
+
+    ```
+    geth --identity “LocalTestNode” --rpc --rpcport 8080 --rpccorsdomain “*” --datadir ./privChain/data/ --port 30303 --nodiscover --rpcapi db,eth,net,web3,personal --networkid 1999 --maxpeers 0 console
+    ```
+
+To check the account funds have been added we can the following command:
+
+    eth.getBalance(eth.account[0])
+
+Finally, for transactions we need the node to be "mined" using ethereum's PoW algorithm. To begin the mining process we can run:
+
+    miner.start(1)
+
+and to stop the process:
+
+    miner.stop()
+
+You should now have set up all you need for a local private ethereum (geth) node!
