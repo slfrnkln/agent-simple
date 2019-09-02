@@ -44,7 +44,7 @@ class ClientAgent(OEFAgent):
 
 
     def on_message(self, msg_id: int, dialogue_id: int, origin: str, content: bytes):
-        print("Received message: origin={}, dialogue_id={}, content={}".format(origin, dialogue_id, content))
+        print("Received message: origin={}, dialogue_id={}".format(origin, dialogue_id))
         data = json.loads(content.decode())
         print ("message...")
         print(data)
@@ -86,31 +86,40 @@ class ClientAgent(OEFAgent):
             print("I am here")
             if len( self.received_proposals) >= 1 :
                 proposed = str(self.received_proposals[0]['proposal'])
-                price = [int(s) for s in proposed.split() if s.isdigit()]
+                #price = [int(s) for s in proposed.split() if s.isdigit()]
+                priceFET = self.received_proposals[0]['proposal']['price']
+                priceETH = int( w3.toWei(transferETH.convertFET(self.received_proposals[0]['proposal']['price']), 'ether'))
                 #check if we can afford the data.
-                if api.tokens.balance(client_agentID) > self.received_proposals[0]['proposal']['price'] :
-                    #if we can, transfer tokens from the client account to the proposal address.
-                    #api.sync(api.tokens.transfer(client_agentID, Address(self.received_proposals[0]['agent']) , self.received_proposals[0]['proposal']['price'], 20))
-                    #transfer.transaction('FET',self.public_key, Address(self.received_proposals[0]['agent']), self.received_proposals[0]['proposal']['price'])
-                    self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
-                    print ("Accept")
-                elif bal_ETH > transferETH.convertFET(self.received_proposals[0]['proposal']['price']) :
-                    #if we can, transfer tokens from the client account to the proposal address.
-                    transaction = { 'from' : w3.eth.defaultAccount, 'to' : self.received_proposals[0]['proposal']['account'], 'value' : int(transferETH.convertFET(self.received_proposals[0]['proposal']['price'])* (1000000000000000000)) }
-                    print('----------------------------------------------------------------')
-                    print(transaction)
-                    print('----------------------------------------------------------------')
-                    #w3.geth.personal.unlockAccount(w3.eth.defaultAccount, 'Password1!')
-                    pword = getpass.getpass()
-                    w3.geth.personal.sendTransaction(transaction, pword)
-                    #transfer.transaction('ETH',acc_ETH, w3.eth.accounts[0], int(transfer.convertFET('ETH', self.received_proposals[0]['proposal']['price'])* (1000000000000000000)))
-                    self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
-                    print ("Accept")
-                else :
-                    print("Not enough tokens!")
-                    #cannot afford! Decline the proposal.
-                    self.send_decline(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
-                    self.stop()
+                print('----------------------------------------------------------------')
+                print('Current Price FET:{0} Current Price ETH:{1}'.format(priceFET, priceETH))
+                print('Current Balance FET:{0} Current Balance ETH:{1}'.format(api.tokens.balance(client_agentID), w3.eth.getBalance(w3.eth.defaultAccount)))
+                p = input('Pay with FET or ETH?')
+                if p.upper() == "FET":
+                    if api.tokens.balance(client_agentID) > priceFET :
+                        #if we can, transfer tokens from the client account to the proposal address.
+                        api.sync(api.tokens.transfer(client_agentID, Address(self.received_proposals[0]['agent']) , priceFET, 20))
+                        #transfer.transaction('FET',self.public_key, Address(self.received_proposals[0]['agent']), self.received_proposals[0]['proposal']['price'])
+                        self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
+                        print ("Accept")
+                        return
+                if p.upper() == "ETH":
+                    if bal_ETH > priceETH :
+                        #if we can, transfer tokens from the client account to the proposal address.
+                        transaction = { 'from' : w3.eth.defaultAccount, 'to' : self.received_proposals[0]['proposal']['account'], 'value' : priceETH }
+                        print('----------------------------------------------------------------')
+                        print(transaction)
+                        print('----------------------------------------------------------------')
+                        #w3.geth.personal.unlockAccount(w3.eth.defaultAccount, 'Password1!')
+                        pword = getpass.getpass(prompt = 'Please type your password:')
+                        w3.geth.personal.sendTransaction(transaction, pword)
+                        #transfer.transaction('ETH',acc_ETH, w3.eth.accounts[0], int(transfer.convertFET('ETH', self.received_proposals[0]['proposal']['price'])* (1000000000000000000)))
+                        self.send_accept(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
+                        print ("Accept")
+                        return
+                print("Not enough tokens!")
+                #cannot afford! Decline the proposal.
+                self.send_decline(msg_id,dialogue_id,self.received_proposals[0]['agent'],msg_id + 1)
+                self.stop()
             else :
                 print("They don't have data")
                 self.stop()
@@ -126,6 +135,10 @@ if __name__ == '__main__':
 
     my_provider = Web3.HTTPProvider("http://127.0.0.1:8080")
     w3 = Web3(my_provider)
+
+    #----------------------------------------------------------------
+
+    accountAddress = ''
 
     #check if account has already been generated
     if(os.path.exists('./client/account.json')):
@@ -145,8 +158,13 @@ if __name__ == '__main__':
         w3.eth.defaultAccount = accountAddress #w3.eth.accounts[0]
     #Generate a new account
     else:
-        print('Please enter password for new account:')
-        pword = getpass.getpass()
+        genAccount = True
+        while genAccount:
+            pword = getpass.getpass(prompt = 'Please enter password for new account:')
+            if pword == getpass.getpass(prompt ='Please re-enter password for new account:'):
+                genAccount = False
+                break
+                print('Passwords did not match!')
         new_account = w3.geth.personal.newAccount(pword)
         print(new_account)
         pword = ''
@@ -160,10 +178,15 @@ if __name__ == '__main__':
             json.dump(x, accountInfo)
 
         #transfer funds from main account
-        transferETH.createFunds(acc_ETH, 200000000000000000000)
+        transferETH.createFunds(new_account, 200000000000000000000)#transfer 200 ether
+        time.sleep(10)
 
     acc_ETH = w3.eth.defaultAccount
     bal_ETH = w3.eth.getBalance(acc_ETH)
+
+    if bal_ETH == 0:
+        transferETH.createFunds(acc_ETH, 200000000000000000000)#transfer 200 ether
+        time.sleep(10)
 
     #check if entity has already been created
     if(os.path.exists('./client/client_private.key')):
@@ -179,7 +202,7 @@ if __name__ == '__main__':
         with open('./client/client_private.key', 'w') as private_key_file:
             client_agentID.dump(private_key_file)
         #give the account starting tokens
-        #api.sync(api.tokens.wealth(client_agentID, 1000))
+        api.sync(api.tokens.wealth(client_agentID, 1000))
 
     startBalance = api.tokens.balance(client_agentID)
 

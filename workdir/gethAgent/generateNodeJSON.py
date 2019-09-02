@@ -3,10 +3,10 @@ from web3 import Web3
 
 #edit addresses down below to add test FET to correct accounts, ETH accounts connected with your agents
 
-my_provider = Web3.HTTPProvider("http://127.0.0.1:8080") #8545, 30303
-w3 = Web3(my_provider)
+#my_provider = Web3.HTTPProvider("http://127.0.0.1:8080") #8545, 30303
+#w3 = Web3(my_provider)
 
-address1 = w3.eth.accounts[0] #"0x41FD089BD912da31b704fc36fdE2d1486E1551B1"
+address1 = "0xC7f8c7e9B41d97B431fD05168aFE70a64C50aCF1" #w3.eth.accounts[0] #"0x41FD089BD912da31b704fc36fdE2d1486E1551B1"
 
 x = {
  "config": {
@@ -28,7 +28,7 @@ x = {
  }
 }
 
-with open('./mychain/CustomGenesis.json', 'w') as customNodeJSON:
+with open('./mychain/nodeJSON.json', 'w') as customNodeJSON:
     json.dump(x, customNodeJSON)
 
 print(json.dumps(x))

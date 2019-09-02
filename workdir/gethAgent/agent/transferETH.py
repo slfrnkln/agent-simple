@@ -17,7 +17,7 @@ class transferETH():
 
     def getFunds(account: str):
         balance = w3.eth.getBalance(account)
-        print('[{0}]: Balance: {1}'.format(account, balance))
+        #print('[{0}]: Balance: {1}'.format(account, balance))
         return balance
 
     def makeAcc(pword: str):
@@ -32,7 +32,7 @@ class transferETH():
         multiplier = 0.0003123
         return amount*multiplier
 
-    w3.eth.defaultAccount = "0x60a8b7055cfB303b796c4C30Aa14A9B06c853eC9"
+    w3.eth.defaultAccount = w3.eth.accounts[0]
 
 '''
     makeAcc('pword1')

@@ -17,7 +17,7 @@ class transferETH():
 
     def getFunds(account: str):
         balance = w3.eth.getBalance(account)
-        print('[{0}]: Balance: {1}'.format(account, balance))
+        #print('[{0}]: Balance: {1}'.format(account, balance))
         return balance
 
     def makeAcc(pword: str):

@@ -53,7 +53,7 @@ class Demo_Agent(OEFAgent):
     def on_accept(self, msg_id: int, dialogue_id: int, origin: str, target: int):
         """Once we received an Accept, check the correct funds have been recieved. If so send the requested data."""
         print("[{0}]: Received accept from {1}.".format(self.public_key, origin))
-        time.sleep(3)
+        time.sleep(10)
 
         if startBalance + price == api.tokens.balance(server_agentID):
             command = {}
@@ -62,14 +62,14 @@ class Demo_Agent(OEFAgent):
             self.send_message(0,dialogue_id, origin, msg.encode())
 
             print('Final Balance:', api.tokens.balance(server_agentID))
-        elif bal_ETH + int(priceETH*1000000000000000000) == transferETH.getFunds(acc_ETH):
+        elif bal_ETH + int(w3.toWei(priceETH, 'ether')) == transferETH.getFunds(acc_ETH):
             command = {}
             command["time"] = int(time.time())
             msg = json.dumps(command)
             self.send_message(0,dialogue_id, origin, msg.encode())
 
             print('Final Balance:', transferETH.getFunds(acc_ETH))
-            print('bal_ETH+price', (bal_ETH + int(priceETH*1000000000000000000)))
+            #print('bal_ETH+price', (bal_ETH + int(w3.toWei(priceETH, 'ether'))))
         else:
             print('No Funds Sent!')
             print('Ending Dialogue')
@@ -113,8 +113,13 @@ if __name__ == '__main__':
         w3.eth.defaultAccount = accountAddress #w3.eth.accounts[0]
     #Generate a new account
     else:
-        print('Please enter password for new account:')
-        pword = getpass.getpass()
+        genAccount = True
+        while genAccount:
+            pword = getpass.getpass(prompt = 'Please enter password for new account:')
+            if pword == getpass.getpass(prompt ='Please re-enter password for new account:'):
+                genAccount = False
+                break
+            print('Passwords did not match!')
         new_account = w3.geth.personal.newAccount(pword)
         print(new_account)
         pword = ''
