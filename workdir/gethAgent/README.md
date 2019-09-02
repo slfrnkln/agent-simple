@@ -55,6 +55,7 @@ You should get a similar output to this:
     GOROOT=/usr/lib/go-1.11
 
 Next we need to create a starting account to add starting test Ethereum to. This will be the account we transfer ETH from to our agent accounts for testing.
+To make this easier lets make the password: "Password1!". If you decide to change this you will need to edit the password provided in transferETH.py or the main account will not be able to transfer funds.
 
     cd workdir/gethAgent/
     geth --datadir ./privChain/data account new
@@ -98,3 +99,22 @@ and to stop the process:
     miner.stop()
 
 You should now have set up all you need for a local private ethereum (geth) node!
+
+### Running the Agents
+
+Following the README in the main folder you can follow these steps to get started with the simple trading agent.
+
+Make sure the ledger and the oef is set up and running locally.
+
+Firstly, make sure you are in the `./gethAgent` directory.
+You can then run the simple trading agent with:
+
+    python3 ./agent/demo_agent.py
+
+Then for the client, to interact with the simple trading agent, run:
+
+    python3 ./client/client_agent.py
+
+Both the agent and client scripts will take you through creating an ethereum account on the local test node. It will ask for you to provide a password for the account which you must not forget.
+
+You should now have everything set up and are ready to begin transfering ETH and FET with the agent!
