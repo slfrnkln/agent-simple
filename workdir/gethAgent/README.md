@@ -39,17 +39,17 @@ First you need to install [geth](https://geth.ethereum.org/install-and-build/Ins
 
 To check geth is installed correctly in the current directory run:
 
-  $geth version
+    $geth version
 
 You should get a similar output to this:
 
-  Geth
-  Version: 1.9.2-stable
-  Git Commit: e76047e9f5499b58064bddde514dd3119a090adf
-  Architecture: amd64
-  Protocol Versions: [63]
-  Network Id: 1
-  Go Version: go1.11.5
-  Operating System: linux
-  GOPATH=
-  GOROOT=/usr/lib/go-1.11
+    Geth
+    Version: 1.9.2-stable
+    Git Commit: e76047e9f5499b58064bddde514dd3119a090adf
+    Architecture: amd64
+    Protocol Versions: [63]
+    Network Id: 1
+    Go Version: go1.11.5
+    Operating System: linux
+    GOPATH=
+    GOROOT=/usr/lib/go-1.11
