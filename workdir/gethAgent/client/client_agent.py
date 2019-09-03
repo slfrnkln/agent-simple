@@ -103,7 +103,7 @@ class ClientAgent(OEFAgent):
                         print ("Accept")
                         return
                 if p.upper() == "ETH":
-                    if bal_ETH > priceETH :
+                    if w3.eth.getBalance(w3.eth.defaultAccount) > priceETH :
                         #if we can, transfer tokens from the client account to the proposal address.
                         transaction = { 'from' : w3.eth.defaultAccount, 'to' : self.received_proposals[0]['proposal']['account'], 'value' : priceETH }
                         print('----------------------------------------------------------------')

@@ -45,7 +45,6 @@ You should get a similar output to this:
 
     Geth
     Version: 1.9.2-stable
-    Git Commit: e76047e9f5499b58064bddde514dd3119a090adf
     Architecture: amd64
     Protocol Versions: [63]
     Network Id: 1
@@ -88,7 +87,7 @@ This will set up the node with starting settings, adding funds to the main accou
 
 To check the account funds have been added we can the following command:
 
-    eth.getBalance(eth.account[0])
+    eth.getBalance(eth.accounts[0])
 
 Finally, for transactions we need the node to be "mined" using ethereum's PoW algorithm. To begin the mining process we can run:
 
@@ -99,6 +98,7 @@ and to stop the process:
     miner.stop()
 
 You should now have set up all you need for a local private ethereum (geth) node!
+(If you have issues with transactions not going through, restart the node in particular the mining process)
 
 ### Running the Agents
 
